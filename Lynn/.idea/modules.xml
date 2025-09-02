@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/D1/D1.iml" filepath="$PROJECT_DIR$/D1/D1.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Lynn.iml" filepath="$PROJECT_DIR$/.idea/Lynn.iml" />
       <module fileurl="file://$PROJECT_DIR$/ObjectsNClasses/ObjectsNClasses.iml" filepath="$PROJECT_DIR$/ObjectsNClasses/ObjectsNClasses.iml" />
     </modules>

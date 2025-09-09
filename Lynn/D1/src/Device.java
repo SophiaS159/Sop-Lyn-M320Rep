@@ -1,6 +1,6 @@
 import java.util.UUID;
 
-public class Device {
+public abstract class Device {
 
     // Vars
     private String name;
@@ -10,14 +10,6 @@ public class Device {
     private String password;
     private final UUID id_person;
 
-    public Device(UUID id_person) {
-        name = "Example Device";
-        age = 0;
-        ip = "000.000.000.00";
-        username = "Example";
-        password = "example";
-        this.id_person = id_person;
-    }
 
     public Device(String name, int age, String ip, String username, String password, UUID id_person) {
         this.name = name;
@@ -31,6 +23,10 @@ public class Device {
     // Getters
     public String getName() {
         return name;
+    }
+
+    public int getAge(){
+        return age;
     }
 
     public String getIp() {
@@ -71,19 +67,21 @@ public class Device {
     }
 
     // Prints Device
-    public void printDetailedDevice() {
-        System.out.println("\nDevice:");
-        System.out.println("  Device Name: " + name);
-        System.out.println("  Age: " + age);
-        System.out.println("  IP: " + ip);
-        System.out.println("  Username: " + username);
-        System.out.println("  Password: " + password);
-        System.out.println("  Owner ID: " + id_person);
-        System.out.println("---------------------");
-    }
+    public abstract void printDetailedDevice();
+//    {
+//        System.out.println("\nDevice:");
+//        System.out.println("  Device Name: " + name);
+//        System.out.println("  Age: " + age);
+//        System.out.println("  IP: " + ip);
+//        System.out.println("  Username: " + username);
+//        System.out.println("  Password: " + password);
+//        System.out.println("  Owner ID: " + id_person);
+//        System.out.println("---------------------");
+//    }
 
-    public void printDevice() {
-        System.out.println("Device Name: " + name);
-        System.out.println("---------------------");
-    }
+    public abstract void printDevice();
+//    {
+//        System.out.println("Device Name: " + name);
+//        System.out.println("---------------------");
+//    }
 }

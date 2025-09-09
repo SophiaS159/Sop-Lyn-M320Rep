@@ -10,8 +10,8 @@ public class Main {
 //            String email = scanner.nextLine();
 //            System.out.print("Password: ");
 //            String password = scanner.nextLine();
-            Library library = new Library("max@example.com","qwertzuhbv257z7u");
-            library.nav();
+            Navigation nav = new Navigation("max@example.com","qwertzuhbv257z7u");
+            nav.navigation();
         }
     }
 }

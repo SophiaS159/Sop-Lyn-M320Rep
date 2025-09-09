@@ -6,7 +6,6 @@ public class Library {
     private final  List<Person> persons = new ArrayList<>();
     private final List<Device> devices = new ArrayList<>();
     private final Person user;
-    private Navigation nav = new Navigation();
     Scanner scanner = new Scanner(System.in);
 
     public Library(String email, String password) {
@@ -14,9 +13,9 @@ public class Library {
         persons.add(new Person("Anna", "Schmidt", 30, "987 654 32 10", "anna.schmidt@example.com", "gdgdgghehiqwaa"));
         persons.add(new Person("Tom", "Müller", 40, "555 666 77 33", "tom.mueller@example.com", "kdkffjjfj2012912e90ää2wöü12,.."));
 
-        devices.add(new Device("Laptop", 5, "192.168.0.10", "max_user", "laptop123", persons.get(0).getId()));
-        devices.add(new Device("Smartphone", 4, "192.168.0.11", "max_phone", "phone123", persons.get(0).getId()));
-        devices.add(new Device("Tablet", 2, "192.168.0.20", "anna_tablet", "tablet123", persons.get(1).getId()));
+        devices.add(new Laptop("MPC", 5, "192.168.0.10", "max_user", "laptop123", persons.get(0).getId(), 34, 2003.00, 2.40));
+        devices.add(new Phone("Max Phone", 4, "192.168.0.11", "max_phone", "phone123", persons.get(0).getId(), 254, 15));
+        devices.add(new Laptop("LannaTop", 2, "192.168.0.20", "anna_s", "tablet123", persons.get(1).getId() , 12, 1309.00, 2.90));
 
         for (Person p : persons){
             if (p.getEmail().equals(email)){
@@ -78,7 +77,7 @@ public class Library {
         int age;
         do {
             System.out.print("Age: ");
-            age = scanner.nextInt();
+            age = Integer.parseInt(scanner.nextLine());
         } while (age < 0);
         System.out.print("Phone Number: ");
         String phoneNumber = scanner.nextLine();
@@ -123,7 +122,44 @@ public class Library {
                 break;
             }
         }
-        devices.add(new Device(name, age,ip,username,password, persons.get(indexPers).getId()));
+        System.out.print("Would you like to create a:\n" +
+                "1.) Laptop\n2.) Phone\nEnter: ");
+        switch (Integer.parseInt(scanner.nextLine())){
+            case 1:
+                int ram;
+                do {
+                    System.out.print("Ram in GB: ");
+                    ram = Integer.parseInt(scanner.nextLine());
+                } while (ram < 0);
+                double storage;
+                do {
+                    System.out.print("Storage in GB: ");
+                    storage = Double.parseDouble(scanner.nextLine());
+                } while (storage < 0.00);
+                double weight;
+                do {
+                    System.out.print("Weight in KG: ");
+                    weight = Double.parseDouble(scanner.nextLine());
+                } while (weight < 0.00);
+                devices.add(new Laptop(name, age,ip,username,password, persons.get(indexPers).getId(), ram, storage, weight));
+                break;
+            case 2:
+                storage = 0;
+                do {
+                    System.out.print("Storage in GB: ");
+                    storage = Double.parseDouble(scanner.nextLine());
+                } while (storage < 0.00);
+                double size;
+                do {
+                    System.out.print("Size in CM: ");
+                    size = Double.parseDouble(scanner.nextLine());
+                } while (size < 0.00);
+                devices.add(new Phone(name, age,ip,username,password, persons.get(indexPers).getId(), storage, size));
+                break;
+            default:
+                System.out.println("Error: This Action Is Not Possible!");
+                break;
+        }
 }
 
     //Edit
@@ -206,7 +242,8 @@ public class Library {
                     3.) Ip *
                     4.) Username *
                     5.) Password *
-                    6.) Exit Editor
+                    6.) Extras *
+                    7.) Exit Editor
                     Enter:\s""");
             switch (Integer.parseInt(scanner.nextLine())) {
                 case 1:
@@ -253,6 +290,46 @@ public class Library {
                     }
                     break;
                 case 6:
+                    Device dev = devices.get(index);
+                    if (dev instanceof Laptop laptop) {
+                        int ram;
+                        do {
+                            System.out.print("Ram in GB: ");
+                            ram = Integer.parseInt(scanner.nextLine());
+                        } while (ram < 0);
+                        laptop.setRam(ram);
+
+                        double storage;
+                        do {
+                            System.out.print("Storage in GB: ");
+                            storage = Double.parseDouble(scanner.nextLine());
+                        } while (storage < 0.00);
+                        laptop.setStorage(storage);
+
+                        double weight;
+                        do {
+                            System.out.print("Weight in KG: ");
+                            weight = Double.parseDouble(scanner.nextLine());
+                        } while (weight < 0.00);
+                        laptop.setWeight(weight);
+
+                    } else if (dev instanceof Phone phone) {
+                        double storage;
+                        do {
+                            System.out.print("Storage in GB: ");
+                            storage = Double.parseDouble(scanner.nextLine());
+                        } while (storage < 0);
+                        phone.setStorage(storage);
+
+                        double size;
+                        do {
+                            System.out.print("Size in CM: ");
+                            size = Double.parseDouble(scanner.nextLine());
+                        } while (size < 0);
+                        phone.setSize(size);
+                    }
+                    break;
+                case 7:
                     return;
                 default:
                     break;
@@ -270,13 +347,7 @@ public class Library {
         persons.remove(index);
     }
 
-    public void deleteDevice(int index){
+    public void deleteDevice(int index) {
         devices.remove(index);
-    }
-
-    //Navigation
-    public void nav(){
-        nav.navigation(user.getEmail(),user.getPassword());
-
     }
 }

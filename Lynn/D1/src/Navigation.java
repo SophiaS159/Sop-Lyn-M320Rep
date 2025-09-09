@@ -1,10 +1,11 @@
 import java.util.Scanner;
 
-public class Navigation {
-    private Library library;
+public class Navigation extends Library{
     Scanner scanner = new Scanner(System.in);
-    public void navigation(String email, String password){
-        library = new Library(email,password);
+    public Navigation (String email, String password){
+        super(email, password);
+    }
+    public void navigation(){
         String navAction[] = {"Show", "Add", "Edit", "Delete", "Logout And End Application", "Change User"};
         String navShow[] = {"All Users","All Devices", "Detailed User", "Detailed Device", "Back"};
         String navAdd[] = {"New User", "New Device", "Back"};
@@ -17,18 +18,18 @@ public class Navigation {
                     while(back) {
                         switch (printNav(navShow)) {
                             case 1:
-                                library.showAllPersons();
+                                showAllPersons();
                                 break;
                             case 2:
-                                library.showAllDevices();
+                                showAllDevices();
                                 break;
                             case 3:
                                 System.out.print("Please Enter The Index Number: ");
-                                library.detailedPerson(scanner.nextInt());
+                                detailedPerson(scanner.nextInt());
                                 break;
                             case 4:
                                 System.out.print("Please Enter The Index Number: ");
-                                library.detailedDevice(scanner.nextInt());
+                                detailedDevice(scanner.nextInt());
                                 break;
                             case 5:
                                 back=false;
@@ -43,11 +44,12 @@ public class Navigation {
                     while (back) {
                         switch (printNav(navAdd)) {
                             case 1:
-                                library.addPerson();
+                                addPerson();
                                 break;
                             case 2:
                                 System.out.print("Please Enter An Index Number Of A User: ");
-                                library.addDevice(scanner.nextInt());
+                                int myValue= scanner.nextInt();
+                                addDevice(myValue);
                                 break;
                             case 3:
                                 back=false;
@@ -63,11 +65,11 @@ public class Navigation {
                         switch (printNav(navEdit)) {
                             case 1:
                                 System.out.print("Please Enter The Index Number: ");
-                                library.editPerson(Integer.parseInt(scanner.nextLine()));
+                                editPerson(Integer.parseInt(scanner.nextLine()));
                                 break;
                             case 2:
                                 System.out.print("Please Enter The Index Number: ");
-                                library.editDevice(Integer.parseInt(scanner.nextLine()));
+                                editDevice(Integer.parseInt(scanner.nextLine()));
                                 break;
                             case 3:
                                 back=false;
@@ -83,11 +85,11 @@ public class Navigation {
                         switch (printNav(navDelete)) {
                             case 1:
                                 System.out.print("Please Enter The Index Number: ");
-                                library.deletePerson(Integer.parseInt(scanner.nextLine()));
+                                deletePerson(Integer.parseInt(scanner.nextLine()));
                                 break;
                             case 2:
                                 System.out.print("Please Enter The Index Number: ");
-                                library.deleteDevice(Integer.parseInt(scanner.nextLine()));
+                                deleteDevice(Integer.parseInt(scanner.nextLine()));
                                 break;
                             case 3:
                                 back=false;
@@ -116,6 +118,11 @@ public class Navigation {
             System.out.println(i+1+".) "+navList[i]);
         }
         System.out.print("Enter: ");
-        return scanner.nextInt();
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        }catch (java.lang.NumberFormatException exception){
+            int i = Integer.parseInt(scanner.nextLine());
+            return i;
+        }
     }
 }

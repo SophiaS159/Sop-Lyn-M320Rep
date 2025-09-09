@@ -242,7 +242,7 @@ public class Library {
                     3.) Ip *
                     4.) Username *
                     5.) Password *
-                    6.) Extras *
+                    6.) Extras
                     7.) Exit Editor
                     Enter:\s""");
             switch (Integer.parseInt(scanner.nextLine())) {

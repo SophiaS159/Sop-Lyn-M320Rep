@@ -1,8 +1,6 @@
-import java.lang.annotation.Repeatable;
-import java.util.Locale;
 import java.util.Scanner;
 
-public class SayHello {
+public class DrawATree {
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String arg[]) {

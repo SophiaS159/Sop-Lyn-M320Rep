@@ -40,7 +40,7 @@ public class User {
     }
 
     public void changePhone(String newPhone) {
-        this.phone = newPhone; // ✅ fixed
+        this.phone = newPhone;
     }
 
     public void changePassword(String oldPw, String newPw) {

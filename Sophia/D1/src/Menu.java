@@ -84,7 +84,7 @@ public class Menu {
             System.out.println("3. Delete vehicle");
             System.out.println("4. Update vehicle");
             System.out.println("5. Update my data");
-            System.out.println("6. Show my data");
+            System.out.println("6. Show my data (via Action example)");
             System.out.println("0. Logout");
             choice = readInt("Choice: ");
 
@@ -94,7 +94,11 @@ public class Menu {
                 case 3 -> deleteVehicle(loggedIn);
                 case 4 -> updateVehicle(loggedIn);
                 case 5 -> updateUser(loggedIn);
-                case 6 -> loggedIn.showMyData();
+                case 6 -> {
+                    // 🔥 Using Action abstraction here
+                    Action action = new ShowUserDataAction();
+                    action.execute(loggedIn, library);
+                }
             }
         } while (choice != 0);
 

@@ -28,6 +28,8 @@ public class Vehicle {
         this.model = newModel;
     }
 
+    public String getPlateNumber() { return plateNumber; }
+
     @Override
     public String toString() {
         return "____Vehicle____\n" +

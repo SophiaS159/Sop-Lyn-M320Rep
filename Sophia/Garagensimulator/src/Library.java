@@ -15,9 +15,9 @@ public class Library {
         };
 
         Vehicle[] vehicleArray = {
-                new Vehicle(1, "EFG345HC", "blue", "F150","car", "bmw"),
-                new Vehicle(2, "ABC123DE", "red", "SP34", "car","toyota"),
-                new Vehicle(3, "BW55JUC", "black", "K-49", "motorcycle", "yamaha")
+                new Car(1, "EFG345HC", "blue", "F150", "bmw"),
+                new Car(2, "ABC123DE", "red", "SP34", "toyota"),
+                new Motorcycle(3, "BW55JUC", "black", "K-49", "yamaha")
         };
 
         // --- Convert arrays to ArrayLists ---

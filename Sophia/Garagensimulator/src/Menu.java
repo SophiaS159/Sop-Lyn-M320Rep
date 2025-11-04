@@ -85,6 +85,7 @@ public class Menu {
             System.out.println("4. Update vehicle");
             System.out.println("5. Update my data");
             System.out.println("6. Show my data (via Action example)");
+            System.out.println("7. Show repair costs of my vehicles");
             System.out.println("0. Logout");
             choice = readInt("Choice: ");
 
@@ -99,13 +100,20 @@ public class Menu {
                     Action action = new ShowUserDataAction();
                     action.execute(loggedIn, library);
                 }
+                case 7 -> {
+                    // 🔧 New Action: Show repair costs
+                    Action repairAction = new ShowRepairCostsAction();
+                    repairAction.execute(loggedIn, library);
+                }
+                case 0 -> System.out.println("Logging out...");
+                default -> System.out.println("Invalid choice. Try again.");
             }
         } while (choice != 0);
 
         System.out.println("Logged out. Goodbye!");
     }
 
-    // --- Vehicle methods (add/delete/update)
+    // --- Vehicle methods (add/delete/update) ---
     private void addVehicle(User loggedIn) {
         System.out.print("Plate number: ");
         String plate = scanner.nextLine();
@@ -115,9 +123,20 @@ public class Menu {
         String brand = scanner.nextLine();
         System.out.print("Model: ");
         String model = scanner.nextLine();
-        System.out.print("Type: ");
-        String type = scanner.nextLine();
-        Vehicle v = new Vehicle(999, plate, color, model, type, brand);
+        System.out.print("Type (car/motorcycle/truck): ");
+        String type = scanner.nextLine().toLowerCase();
+
+        Vehicle v;
+        switch (type) {
+            case "car" -> v = new Car(999, plate, color, model, brand);
+            case "motorcycle" -> v = new Motorcycle(999, plate, color, model, brand);
+            case "truck" -> v = new Truck(999, plate, color, model, brand);
+            default -> {
+                System.out.println("Unknown type. Creating generic vehicle.");
+                v = new Car(999, plate, color, model, brand);
+            }
+        }
+
         loggedIn.addVehicle(v);
         System.out.println("Vehicle added!");
     }
@@ -129,6 +148,7 @@ public class Menu {
         Vehicle found = loggedIn.getMyVehicles().stream()
                 .filter(v -> v.toString().contains(plateDel))
                 .findFirst().orElse(null);
+
         if (found != null) {
             loggedIn.removeVehicle(found);
             System.out.println("Vehicle deleted.");
@@ -144,6 +164,7 @@ public class Menu {
         Vehicle v = loggedIn.getMyVehicles().stream()
                 .filter(veh -> veh.toString().contains(plateEdit))
                 .findFirst().orElse(null);
+
         if (v != null) {
             System.out.print("New color: ");
             v.repaint(scanner.nextLine());
@@ -184,6 +205,7 @@ public class Menu {
                 String newPw = scanner.nextLine();
                 loggedIn.changePassword(oldPw, newPw);
             }
+            default -> System.out.println("Invalid choice.");
         }
     }
 }

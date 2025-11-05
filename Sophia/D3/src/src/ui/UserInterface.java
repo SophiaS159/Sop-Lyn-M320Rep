@@ -1,49 +1,50 @@
 package src.ui;
+import src.exception.InvalidInputException;
+import src.logic.ConversionLogic;
 
 import java.util.Scanner;
-import src.logic.CalculatorController;
-import src.exception.InvalidInputException;
 
 public class UserInterface {
+    private final Scanner scanner = new Scanner(System.in);
+    private final ConversionLogic logic = new ConversionLogic();
 
-    private final CalculatorController controller;
-    private final Scanner scanner;
-
-    public UserInterface() {
-        this.controller = new CalculatorController();
-        this.scanner = new Scanner(System.in);
-    }
-
-    public void start() {
-        System.out.println("=== Einfacher Taschenrechner ===");
-
-        while (true) {
+    public void startApplication() {
+        System.out.println("--- Währungsrechner gestartet ---");
+        boolean running = true;
+        while (running) {
             try {
-                System.out.print("Erste Zahl eingeben (oder 'exit' zum Beenden): ");
-                String input = scanner.nextLine();
-                if (input.equalsIgnoreCase("exit")) {
-                    System.out.println("Auf Wiedersehen!");
-                    break;
-                }
+                System.out.print("\nBetrag eingeben: ");
+                double amount = scanner.nextDouble();
+                scanner.nextLine();
 
-                double a = Double.parseDouble(input);
+                System.out.print("Von Währung (z.B. EUR): ");
+                String from = scanner.nextLine().toUpperCase();
 
-                System.out.print("Zweite Zahl: ");
-                double b = Double.parseDouble(scanner.nextLine());
+                System.out.print("Nach Währung (z.B. USD): ");
+                String to = scanner.nextLine().toUpperCase();
 
-                System.out.print("Operation (+, -, *, /): ");
-                String op = scanner.nextLine();
+                double result = logic.convert(amount, from, to);
 
-                double result = controller.calculate(a, b, op);
-                System.out.println("Ergebnis: " + result);
+                System.out.printf("ERGEBNIS: %.2f %s entspricht %.2f %s\n", amount, from, result, to);
 
             } catch (InvalidInputException e) {
-                System.out.println("Fehler: " + e.getMessage());
-            } catch (NumberFormatException e) {
-                System.out.println("Ungültige Zahleneingabe!");
+
+                System.err.println("FEHLER bei der Eingabe/Umrechnung: " + e.getMessage());
+
+            } catch (java.util.InputMismatchException e) {
+                System.err.println("FEHLER: Ungültiges Zahlenformat. Bitte nur Zahlen eingeben.");
+                scanner.nextLine();
             } catch (Exception e) {
-                System.out.println("Ein unerwarteter Fehler ist aufgetreten: " + e.getMessage());
+                System.err.println("Ein unerwarteter Fehler ist aufgetreten: " + e.getMessage());
+            }
+
+
+            System.out.print("Beenden? (J/N): ");
+            String stop = scanner.nextLine();
+            if (stop.trim().equalsIgnoreCase("J")) {
+                running = false;
             }
         }
+        System.out.println("--- Währungsrechner beendet ---");
     }
 }
